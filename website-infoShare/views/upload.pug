@@ -1,0 +1,31 @@
+extends tmplayout
+
+block content 
+    h1.title Post Upload
+    h2.minititle
+        a(href='/home')  Food&Life 
+    table(align='center')
+        form(action='/upload/uploadDB' method='post')
+            tr
+                th Topic : 
+                td
+                    input(type='radio' name='topic' value='free' checked='')
+                    | free
+                    input(type='radio' name='topic' value='recipe')
+                    | recipe
+                    input(type='radio' name='topic' value='tip')
+                    | tip
+                    br
+            tr
+                th Title : 
+                td
+                    input(type='text' name='title')
+                    br
+            tr
+                th Text : 
+                td
+                    textarea(rows='20' cols='85%' name='text')
+                    br
+            tr
+                th(colspan='2')
+                    input(type='submit' name='submit' value='Upload')

@@ -1,0 +1,46 @@
+extends tmplayout
+
+block content 
+    h1.title  View Post 
+    h2.minititle
+        a(href='/home')  Food&Life 
+    .posts(style='width:40%;text-align: left; padding: 20px;')
+        h2  
+            ='['+`${item.topic}`+']'
+            =item.title
+        hr
+        span 작성자: 
+            =item.user 
+        if(userId==`${item.userId}`)
+            .link
+                a(href='/post/edit?id='+`${item._id}`) [Edit]
+            .link
+                a(href='/post/delete?id='+`${item._id}`) [Delete]
+         
+
+        //img(src='get.php?id=$id' width='500px')
+        br
+        pre
+            =item.content        
+        br
+        hr
+        .comments
+            b [Comment]
+            if(item_comment)
+                each comment, index in item_comment 
+                    .comment
+                        ='['+`${comment.user}`+']    '
+                        if(userId==`${comment.userId}`)
+                            .link
+                                a(href='/post/comment/deleteDB?id='+`${comment._id}`+'&postId='+`${item._id}`) [Delete]
+                        br
+                        =comment.text
+
+            form(action='/post/comment/uploadDB?postId='+`${item._id}` method='post')
+                .comment
+                    input(type='text' name='text' style='width:95%;margin:5px;height:30px;')
+                    br
+                    label(style='margin-left: 70%;')
+                        input(type='submit' name='submit' value='Comment Upload' style='padding:5px;margin:5px;')
+
+        

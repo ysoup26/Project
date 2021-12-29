@@ -1,0 +1,37 @@
+[{
+  "_id": {
+    "$oid": "61acd336a1a27e35a368c391"
+  },
+  "user": "one",
+  "text": "cookie comment",
+  "postId": "61ab346a413954fd85c3db35",
+  "userId": "61ab3407413954fd85c3db2d",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "61acd418a1a27e35a368c3c8"
+  },
+  "user": "two",
+  "text": "고구마..",
+  "postId": "61acd31ca1a27e35a368c37e",
+  "userId": "61acd405a1a27e35a368c3b2",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "61acd840a1a27e35a368c484"
+  },
+  "user": "two",
+  "text": "댓글 기능",
+  "postId": "61acd828a1a27e35a368c477",
+  "userId": "61acd405a1a27e35a368c3b2",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "61c9534c5090dc6be8aec4da"
+  },
+  "user": "one",
+  "text": "댓글 기능-삭제 가능",
+  "postId": "61ab346a413954fd85c3db35",
+  "userId": "61ab3407413954fd85c3db2d",
+  "__v": 0
+}]

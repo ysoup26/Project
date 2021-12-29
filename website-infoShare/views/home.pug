@@ -1,0 +1,29 @@
+extends tmplayout 
+
+block content
+    body
+    h1.title
+      a(href='/home')  Food&Life 
+    ul.menus
+      li.menu
+        a(href='/search') Search
+      br
+      li.menu
+        a(href='/upload') Upload
+      br
+    .pop
+      h2  Welcome ! 
+      .link
+        a(href="/users/info-change") [Inform change]
+      br
+      .link
+        a(href='/users/logout') [Logout]
+    .posts
+        h2.subtitle All post
+        hr
+        each item, index in items 
+            .post
+                a(href="/post?id="+`${item._id}`) 
+                    img(src="/Noimage.png" width="50px")
+                    br
+                    span [#{item.topic}] #{item.title} 
