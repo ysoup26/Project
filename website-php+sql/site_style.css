@@ -1,0 +1,48 @@
+/*사이트 스타일*/
+/*default*/
+a {text-decoration: none; color: blue;}
+body {text-align: center;}
+img{width: 250px; height: 200px;}
+div {display: inline-block; }
+hr {margin: 0; margin-bottom: 20px; background: lightblue;}
+table {border-collapse: collapse; width: 50%;
+		border: 2px solid black; font-size: 20px}
+tr,th,td{border: 1px solid black; padding: 10px;}		
+th {background: lightblue;}
+/*title*/
+h1.title {background: rgb(143,153,207);
+		  color: white; 
+		  padding: 15px; font-style: italic;}
+h1.title a {color: white;}
+h2.subtitle {background: lightblue; 
+			margin: 0; padding: 15px; color: white;}
+h2.minititle {display: inline-block; position: absolute; 
+				left: 40px; top: 20px;
+				font-style: italic;}
+h2.minititle a {color: white;}
+/*menu*/
+ul.menus {position: absolute; width: 220px; background: white; 
+		  padding-left: 10px; margin-left: 30px; margin-top: 100px;}
+li.menu {display: inline-block; background:lightblue;
+		padding: 8px 20px; margin-top: 10px; margin-bottom: 10px;
+		width: 80%; margin-right:10px }
+li.menu a{color: white; font-size: 25px; font-weight: bold; }
+li.menu:hover{background: deepskyblue;}
+/*popup*/
+div.pop { position: absolute; border: 2px solid black; border-radius: 20px;
+			background: white; width: 200px; right: 30px;
+			margin-top: 100px; padding: 10px;}
+/*small link*/
+div.link {margin-bottom: 20px;}
+div.link:hover {background: lightgray;}
+/*post*/
+div.posts {width:60%; algin: center; margin-top: 30px; 
+		   	border: 4px solid lightblue;}
+div.post {text-align: center; margin: 10px;
+		  border: 1px solid black; padding: 3px}
+div.post:hover {background: lightgray; transform: scale(1.1,1.1);}
+/*comment*/
+div.comment {border: 1px solid black; border-radius: 5px;
+			width: 90%; margin: 10px; padding: 10px; background: white;}
+div.comments {width: 90%; margin: 10px; padding: 10px; border-radius: 5px; 
+			   background:lightblue;}
