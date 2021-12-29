@@ -1,0 +1,55 @@
+/*사이트 스타일*/
+/*default*/
+a {text-decoration: none; color: blue;}
+body {text-align: center; font: "Lucida Grande", Helvetica, Arial, sans-serif;
+	background-image:url('/81.png');}
+img{width: 250px; height: 200px;}
+div {display: inline-block; }
+hr {margin: 0; margin-bottom: 20px; background: lightblue;}
+table {border-collapse: collapse; width: 50%;
+		border: 1px solid rgb(59, 59, 59); font-size: 20px;
+		background: white;}
+tr,th,td{border: 0.5px solid rgb(65, 65, 65); padding: 10px; font-weight:normal}		
+th {background: #99B956;}
+/*title*/
+h1.title {background: #e74c3c;
+		  color: white; 
+		  padding: 15px; font: 45px "Lucida Grande", Helvetica, Arial, sans-serif;}
+h1.title a {color: white;}
+h2.subtitle {background: #F76707; 
+			margin: 0; padding: 15px; color: white;
+		}
+h2.minititle {display: inline-block; position: absolute; 
+				left: 40px; top: 20px;
+				font: "Lucida Grande", Helvetica, Arial, sans-serif;}
+h2.minititle a {color: white;}
+/*menu*/
+ul.menus {position: absolute; width: 220px; background: white; 
+		  padding-left: 10px; margin-left: 30px; margin-top: 100px;}
+li.menu {display: inline-block; background:#F76707;
+		padding: 8px 20px; margin-top: 10px; margin-bottom: 10px;
+		width: 80%; margin-right:10px }
+li.menu a{color: white; font-size: 25px; font-weight: bold; }
+li.menu:hover{background: #e74c3c;}
+/*popup*/
+div.pop { position: absolute; border: 1px solid gray; border-radius: 20px;
+			background: white; width: 200px; right: 30px;
+			margin-top: 100px; padding: 10px; color:#99B956;}
+div.pop a{color: black;}
+/*small link*/
+div.link {margin-bottom: 20px;}
+div.link:hover {background: lightgray;}
+/*post*/
+div.posts {width:60%; align-content: center; margin-top: 30px; 
+		   	border: 1px solid black;
+			   background-color: white;}
+div.post {text-align: center; margin: 10px;
+		  border: 1px solid black; padding: 3px;
+		  box-shadow: 4px 2px 2px lightgray;}
+div.post a{color: black;}
+div.post:hover {background: lightgray; transform: scale(1.1,1.1);}
+/*comment*/
+div.comment {border: 1px solid rgb(112, 112, 112); border-radius: 5px;
+			width: 90%; margin: 10px; padding: 10px; background: white;}
+div.comments {width: 90%; margin: 10px; padding: 10px; border-radius: 5px; 
+			   background:#99B956;}

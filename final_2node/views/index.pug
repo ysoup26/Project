@@ -1,0 +1,12 @@
+extends ./layout.pug
+block content
+    div(class='container')
+        div(class="row mt-5")
+            div(class="col-md-6 m-auto")
+                div(class="card card-body text-center")
+                    h1
+                        img(src="/cookicon.png" style="width:30%")
+                    p Create an account or login
+                    a(href="/users/register" class="btn btn-primary btn-block mb-2") Register
+                    a(href="/users/login" class="btn btn-secondary btn-block") Login
+                    

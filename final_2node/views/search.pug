@@ -1,0 +1,26 @@
+extends tmplayout 
+
+block content
+    body
+    h1.title
+        ='Search' 
+    h2.minititle
+        a(href='/home')  Food&Life 
+    .posts
+        h3
+            form(action='/search/findDB' method='post')
+                p
+                    ='검색 : ' 
+                    input(type='text' name='text')
+                    input(type='submit' name='submit' value='search')
+        hr
+        if(items)
+            each item, index in items 
+                .post
+                    a(href="/post?id="+`${item._id}`) 
+                        img(src="/Noimage.png" width="50px")
+                        br
+                        span [#{item.topic}] #{item.title} 
+
+    
+        

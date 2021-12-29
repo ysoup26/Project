@@ -1,0 +1,48 @@
+extends ./layout.pug
+block content
+    body 
+    h2.minititle(style="margin:10px;padding:10px;")
+        a(href='/home')  Food&Life 
+
+    div(class='container' )
+        div(class="row mt-5")
+            div(class="col-md-6 m-auto")
+                div(class="card card-body")
+                    h1(class="text-center mb-3")
+                        i(class="fas fa-user-plus")  Your Info
+                    form()
+                        div(class="form-group")
+                            label(for="name") Name
+                            p(id="name" class="form-control") 
+                                =item.name
+                        div(class="form-group")
+                            label(for="email") Email
+                            p(id="name" class="form-control") 
+                                =item.email
+                        div(class="form-group")
+                            label(for="password") Password
+                            p(id="name" class="form-control") 
+                                if(pass)
+                                    =pass
+                                else 
+                                    label 
+                                        span(style="color:red") *확인 불가
+                        button(type='submit' class="btn btn-primary btn-block" style="visibility:hidden") Change
+    div(class='container')
+        div(class="row mt-5")
+            div(class="col-md-6 m-auto")
+                div(class="card card-body")
+                    h1(class="text-center mb-3")
+                        i(class="fas fa-user-plus")  Info-Change
+                    form(action="/users/info-change/updateDB" method="POST")
+                        div(class="form-group")
+                            label(for="name") Name
+                            p(id="name" class="form-control") 
+                                =item.name
+                        div(class="form-group")
+                            label(for="email") Email
+                            input(type="email" id="email" name="email" class="form-control" placeholder="Enter Email" required value=email)
+                        div(class="form-group")
+                            label(for="password") Password
+                            input(type="password" id="password" name="password" class="form-control" placeholder="Enter Password" required value=password)
+                        button(type='submit' class="btn btn-primary btn-block") Change
