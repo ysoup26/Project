@@ -1,4 +1,4 @@
-package finaltest;
+
 //라이브러리 호출
 import java.awt.*;
 import java.awt.event.*;
@@ -13,9 +13,9 @@ class PanelA extends JPanel{
 	ControlPoint cp; //컨트롤 포인트 객체
 	Shape select; //선택된 도형 정보가 담긴 Shape
 	boolean isFocusS=false,isFocusCP=false;
-	String selectBtn; //눌려진 버튼의 정보 저장할 변수
+	String selectBtn=""; //눌려진 버튼의 정보 저장할 변수
 	int btwX,btwY,selectIndex; //간격, 선택인덱스에 대한 변수
-	int x,y,width,height,x2,y2; //도형 생성에 대한 변수
+	int x,y,width,height,xL2,yL2,xL,yL; //도형 생성에 대한 변수
 	/*생성자*/
 	PanelA(){
 		setBackground(Color.YELLOW);
@@ -27,6 +27,7 @@ class PanelA extends JPanel{
 	}
 	//내부 클래스 이벤트 리스너-마우스 이벤트///
 	private class MPListener extends MouseAdapter{
+		
 		public void mousePressed(MouseEvent e) { //도형 선택&&해제
 			start=e.getPoint(); 
 			end=e.getPoint();  
@@ -45,7 +46,8 @@ class PanelA extends JPanel{
 				        btwY=start.y-select.y;
 					}
 					break;
-				}
+			}
+			repaint();
 		}
 		/* 도형 이동, 크기 조절: 마우스 이벤트 */
 		public void mouseDragged(MouseEvent e) { //드래그 할 때
@@ -85,7 +87,9 @@ class PanelA extends JPanel{
 					shapes.add(rect); //shape객체 배열에 저장>>업 캐스팅
 		        	break;
 		        case "직선": //다른 도형과 다르게 너비높이가 아니라 시작과 끝점
-		        	Shape line=new Line(start.x,start.y,end.x,end.y); //start.x,start.y,end.x,end.y
+		        	if(xL2==9999)// '/'은 저장하지 않도록 함
+		        		break;
+		        	Shape line=new Line(xL,yL,xL2,yL2); 
 		        	shapes.add(line);//shape객체 배열에 저장>>업 캐스팅
 		        	break;
 		        case "타원":
@@ -95,7 +99,6 @@ class PanelA extends JPanel{
 		        }
 			}else {  //isFocusS==True 도형 이동
 				switch(selectBtn) { 
-				case "": //시작시
 				case "사각":
 				case "직선":
 				case "타원":
@@ -109,10 +112,12 @@ class PanelA extends JPanel{
 	////* 도형 그리는 메소드 *////
 	public void paintComponent(Graphics g) { //도형 그리기
       super.paintComponent(g); 
-      
+      if(selectBtn==null) { //버튼을 클릭하지 않았을땐X
+    	  return;
+      }
       for(int i=0;i<shapes.size();i++) { //배열 내에 저장된 도형 전체 출력
       	Shape shape=shapes.get(i);
-      	if(shape.equal(select)&&selectBtn!=""&&selectBtn!="복사"&&selectBtn!="삭제") {
+      	if(shape.equal(select)&&selectBtn!="복사"&&selectBtn!="삭제") {
       		continue; //이동, 크기조절할때 선택된 도형을 그리지않게함
       	}
       	shape.draw(g);
@@ -121,7 +126,6 @@ class PanelA extends JPanel{
       
       if(start==null||end==null) //프로그램 시작시 실행되는 오류 방지
     	  return;
-      
       if(isFocusCP) {  //도형 크기 조절
     	 	switch(selectBtn) {
     	 		case "사각":
@@ -143,7 +147,9 @@ class PanelA extends JPanel{
 	        	g.drawRect(x, y, width, height);
 	        	break;
 	        case "직선":
-	        	g.drawLine(start.x,start.y,end.x,end.y);
+	        	if(xL2==9999)//'/'은 저장하지 않도록 함
+	        		break;
+	        	g.drawLine(xL,yL,xL2,yL2);
 	        	break;
 	        case "타원":
 	        	g.drawOval(x, y, width, height);
@@ -164,10 +170,19 @@ class PanelA extends JPanel{
 	public void calculateMakeV(Point start,Point end) {
 		x=Math.min(start.x, end.x);
         y=Math.min(start.y, end.y);
-        x2=Math.max(start.x, end.x);
-        y2=Math.max(start.y, end.y);
         width=Math.abs(start.x-end.x);
         height=Math.abs(start.y-end.y);
+        xL=Math.min(start.x, end.x);
+        yL=Math.min(start.y, end.y);
+        if(xL==start.x&&yL==start.y) {//start가 왼쪽 상단
+			xL2=end.x;
+			yL2=end.y;
+		}else if(xL==end.x&&yL==end.y) { //end가 왼쪽 상단
+			xL2=start.x;
+			yL2=start.y;
+		}else { //둘다 아님->그리지 않음//안전장치
+			xL2=9999;
+		}
 	}
 	public boolean isShapeOrCpSelect(ArrayList<Shape> shapes,ControlPoint cp) {
 		for(int i=shapes.size()-1;i>=0;i--) { //선택:뒤에서부터 확인해서 도형겹침이나 순서 고려
@@ -256,32 +271,44 @@ class PanelA extends JPanel{
 	public void SizeChangeWCp1(Shape select,int selectIndex,ArrayList<Shape> shapes) {//cp1 클릭시 도형 크기조절
 		int width=start.x-end.x;
 		int height=start.y-end.y;
-		if(select instanceof Rectangle) {
+		if(select instanceof Rectangle) {//안전장치
 			Rectangle tmp=(Rectangle)select;
-			Shape s=new Rectangle(end.x,end.y,width+tmp.getWidth(),height+tmp.getHeight());
-			shapes.set(selectIndex,s);
+			if(width+tmp.getWidth()>0&&height+tmp.getHeight()>0) {
+				Shape s=new Rectangle(end.x,end.y,width+tmp.getWidth(),height+tmp.getHeight());
+				shapes.set(selectIndex,s);
+			}
 		}else if(select instanceof Line) {
 			Line tmp=(Line)select;
-			Shape s=new Line(end.x,end.y,tmp.getX2(),tmp.getY2());//s.x+10,s.y+10,s.width,s.height
-			shapes.set(selectIndex,s);
+			if(end.x<tmp.getX2()&&end.y<tmp.getY2()) {
+				Shape s=new Line(end.x,end.y,tmp.getX2(),tmp.getY2());//s.x+10,s.y+10,s.width,s.height
+				shapes.set(selectIndex,s);
+			}
 		}else{
 			Oval tmp=(Oval)select;
-			Shape s=new Oval(end.x,end.y,width+tmp.getWidth(),height+tmp.getHeight());
-			shapes.set(selectIndex,s);
+			if(width+tmp.getWidth()>0&&height+tmp.getHeight()>0) {
+				Shape s=new Oval(end.x,end.y,width+tmp.getWidth(),height+tmp.getHeight());
+				shapes.set(selectIndex,s);
+			}
 		}
 		cp.setCp1(false);
 		isFocusCP=false;
 	}
 	public void SizeChangeWCp2(Shape select,int selectIndex,ArrayList<Shape> shapes) {//cp2 클릭시 도형 크기조절
 		if(select instanceof Rectangle) {
-			Shape s=new Rectangle(select.x,select.y,end.x-select.x,end.y-select.y);
-			shapes.set(selectIndex,s);
+			if(end.x-select.x>0&&end.y-select.y>0) {//안전장치:올바를때만 값 변경
+				Shape r=new Rectangle(select.x,select.y,end.x-select.x,end.y-select.y);
+				shapes.set(selectIndex,r);
+			}
 		}else if(select instanceof Line) {
-			Line s=new Line(select.x,select.y,end.x,end.y);
-			shapes.set(selectIndex,s);
+			if(select.x<end.x&&select.y<end.y){//end가 s보다 커야 그림
+				Shape l=new Line(select.x,select.y,end.x,end.y);
+				shapes.set(selectIndex,l);
+			}
 		}else{
-			Oval s=new Oval(select.x,select.y,end.x-select.x,end.y-select.y);
-			shapes.set(selectIndex,s);
+			if(end.x-select.x>0&&end.y-select.y>0) {//안전장치
+				Shape o=new Oval(select.x,select.y,end.x-select.x,end.y-select.y);
+				shapes.set(selectIndex,o);
+			}
 		}
 		cp.setCp2(false);
 		isFocusCP=false;
@@ -297,7 +324,8 @@ class PanelA extends JPanel{
       		cp.cpChange(end.x,end.y,x2+s.getWidth(),y2+s.getHeight());//width+s.width,height+s.height
       	}else if(select instanceof Line) {
       		Line s=(Line)select;
-      		g.drawLine(end.x,end.y,s.getX2(),s.getY2());
+      		if(end.x<s.getX2()&&end.y<s.getY2())//end가 s보다 커야 그림
+      			g.drawLine(end.x,end.y,s.getX2(),s.getY2());
     	 	cp.cpChange(end.x,end.y,s.getX2(),s.getY2());
       	}else{
       		Oval s=(Oval)select;
@@ -309,17 +337,17 @@ class PanelA extends JPanel{
 	public void SizeChangeDrawCp2(Graphics g) { //cp2 클릭시 도형 크기조절 그리기
 		if(select instanceof Rectangle) {
       		Rectangle s=(Rectangle)select;
-      		g.drawRect(s.x,s.y,end.x-s.x,end.y-s.y);
       		cp.cpChange(s.x,s.y,end.x,end.y);
-      		
+      		g.drawRect(s.x,s.y,end.x-s.x,end.y-s.y);//음수가 되면 그리지 않음
       	}else if(select instanceof Line) {
       		Line s=(Line)select;
-      		g.drawLine(s.x,s.y,end.x,end.y);
-    	 	cp.cpChange(s.x,s.y,end.x,end.y);
+      		cp.cpChange(s.x,s.y,end.x,end.y);
+      		if(s.x<end.x&&s.y<end.y)//end가 s보다 커야 그림
+      			g.drawLine(s.x,s.y,end.x,end.y);
       	}else{
       		Oval s=(Oval)select;
-      		g.drawOval(s.x,s.y,end.x-s.x,end.y-s.y);
       		cp.cpChange(s.x,s.y,end.x,end.y);
+      		g.drawOval(s.x,s.y,end.x-s.x,end.y-s.y);
       	}
 		cp.draw(g);
 	}

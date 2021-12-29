@@ -1,4 +1,3 @@
-package finaltest;
 
 import javax.swing.JPanel;
 

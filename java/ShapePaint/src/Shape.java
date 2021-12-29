@@ -1,5 +1,3 @@
-package finaltest;
-
 import java.awt.*;
 import java.awt.event.*;
 import java.io.Serializable;
@@ -70,7 +68,14 @@ class Line extends Shape{
 		g.drawLine(super.x, super.y, x2, y2);
 	}
 	public boolean include(Point p) {
-		return super.include(p)&&x2>=p.x&&y2>=p.y;
+		//double 기울기=1;
+		System.out.println("선 클릭됨");
+		int inclination1=(int)(((float)(y-y2)/(float)(x-x2))*10);
+		int inclination2=(int)(((float)(y-p.y)/(float)(x-p.x))*10);
+		System.out.print(inclination1);
+		System.out.print(" : ");
+		System.out.println(inclination2);
+		return super.include(p)&&x2>=p.x&&y2>=p.y&&inclination1==inclination2;
 	}
 	public boolean equal(Shape s) {
 		if(s instanceof Line) {
