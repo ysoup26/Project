@@ -1,6 +1,6 @@
 package test;
 import java.util.Scanner;
-//5735¹ø: Emoticons
+//5735ë²ˆ: Emoticons
 public class Main {
 	public static void main(String []args) {
 		Scanner scan=new Scanner(System.in);
@@ -15,39 +15,39 @@ public class Main {
 			for(int i=0;i<N;i++) {
 				emote[i]=scan.next();
 			}
-			scan.nextLine();//³²¾ÆÀÖ´Â °ø¹é¹®ÀÚ ¹öÆÛ¿¡¼­ Áö¿ò(\n)
+			scan.nextLine();//ë‚¨ì•„ìˆëŠ” ê³µë°±ë¬¸ì ë²„í¼ì—ì„œ ì§€ì›€(\n)
 			for(int i=0;i<M;i++) {
 				text[i]=scan.nextLine();
 			}
 			
 			for(int i=0;i<M;i++) {
-				int indexN=0; //´ÙÀ½ÁÙ·Î °¡¸é ´Ù½Ã ¾ÕºÎÅÍ
-				int findCount=0; //Àç°Ë»ç¿¡ ´ëÇÑ º¯¼ö
+				int indexN=0; //ë‹¤ìŒì¤„ë¡œ ê°€ë©´ ë‹¤ì‹œ ì•ë¶€í„°
+				int findCount=0; //ì¬ê²€ì‚¬ì— ëŒ€í•œ ë³€ìˆ˜
 				
-				while(true) { //ÇÑ ÁÙ¿¡ ´ëÇÑ ÀÌ¸ğÆ¼ÄÜÀ» Ã£´Â ¹İº¹¹®
+				while(true) { //í•œ ì¤„ì— ëŒ€í•œ ì´ëª¨í‹°ì½˜ì„ ì°¾ëŠ” ë°˜ë³µë¬¸
 					int j=0;
 					for(;j<N;j++) {
 						int tmpIndex=999;
 						if(text[i].indexOf(emote[0],indexN)!=-1) {
 							tmpIndex=text[i].indexOf(emote[0],indexN);
 						}
-						for(int k=1;k<N;k++) { //ÃÖ¼Ò index Ã£±â
+						for(int k=1;k<N;k++) { //ìµœì†Œ index ì°¾ê¸°
 							if((text[i].indexOf(emote[k],indexN)!=-1)&&(tmpIndex>text[i].indexOf(emote[k],indexN)))
 								tmpIndex=text[i].indexOf(emote[k],indexN);
 						}
 						if(tmpIndex!=999) {
 							emoteCount++;
-							indexN=tmpIndex+emote[j].length(); //ÀÌ¸ğÆ¼ÄÜ ±æÀÌ¸¸Å­ µÚ·Î
+							indexN=tmpIndex+emote[j].length(); //ì´ëª¨í‹°ì½˜ ê¸¸ì´ë§Œí¼ ë’¤ë¡œ
 							findCount=0;
 							break;
 						}
 					}
-					if(indexN!=999&&findCount==0) { //Àç°Ë»ç
+					if(indexN!=999&&findCount==0) { //ì¬ê²€ì‚¬  
 						findCount++;
 						continue;
-					}else if(findCount==1){ //Àç°Ë»çÇß´Âµ¥ ÀÌ¸ğÆ¼ÄÜÀ» ¸øÃ£À½-´ÙÀ½ÁÙ·Î
+					}else if(findCount==1){ //ì¬ê²€ì‚¬í–ˆëŠ”ë° ì´ëª¨í‹°ì½˜ì„ ëª»ì°¾ìŒ-ë‹¤ìŒì¤„ë¡œ
 						break;
-					}else//ÇØ´ç ÁÙ¿¡ ÀÌ¸ğÆ¼ÄÜÀÌ ¾øÀ½-´ÙÀ½ÁÙ·Î
+					}else//í•´ë‹¹ ì¤„ì— ì´ëª¨í‹°ì½˜ì´ ì—†ìŒ-ë‹¤ìŒì¤„ë¡œ
 						break;		
 				}
 			}
